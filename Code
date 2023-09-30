@@ -1,0 +1,65 @@
+def three(n): #на случай трех переменных
+    ans = []
+    for x in range(2):
+        for y in range(2):
+            for z in range(2):
+                f = int(bool(eval(s)))
+                ans.append([x, y, z, f])
+    return ans
+def four(n): #на случай трех переменных
+    ans = []
+    for x in range(2):
+        for y in range(2):
+            for z in range(2):
+                for w in range(2):
+                    f = int(bool(eval(s)))
+                    ans.append([x, y, z, w, f])
+    return ans
+
+s = ''.join(input().split()) #ввожу условие
+
+alf = 'qwertyuiopasdfghjklzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM'
+variable = []
+for i in s:
+    if i in alf and i not in variable:
+        variable.append(i)             #добавляю в массив переменные из условия, чтобы потом заменить на те, которые есть в МОЕЙ базе (xyzw)
+
+if '∧' in s:
+    s = s.replace('∧', '*')
+if '∨' in s:
+    s = s.replace('∨', '+')
+if '→' in s:
+    s = s.replace('→', '<=')
+if '⇔' in s:
+    s = s.replace('⇔', '==')
+
+s1 = s
+s = [s[j] for j in range(len(s))] #разбиваю s на элементы массива, чтобы подставить синтаксис отрицания
+for x in range(len(s)):
+    if s[x] == '¬':
+        if '¬(' in s1:
+            s[x] = '(not'
+            s[s[x::].index(')')+x] = '))' #ищу конец начавшейся скобки в срезе (дабы не наткнуться на другую скобку, встречавшуюся раньше)
+                                          # прибавляю Х, чтобы индекс был правдив для всего массива, а не его маленькой части
+        else:
+            s[x] = '(not ' + s[x + 1]
+            s[x + 1] = ')'
+s = ''.join(s)
+
+
+print(*variable, 'f') # вывожу названия переменных для таблицы
+
+norm = ['x', 'y', 'z', 'w'] #заменяю буквы из условия на те, которые мне нужны
+for n in range(len(variable)):
+    if variable[n] in s:
+        a = norm[n]
+        b = variable[n]
+        s = s.replace(b,a)
+print(s)
+
+if len(variable)==3:
+    for j in three(1):
+        print(*j)
+if len(variable)==4:
+    for j in four(1):
+        print(*j)
