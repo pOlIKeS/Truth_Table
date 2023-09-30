@@ -1,0 +1,17 @@
+s = input()
+if '∧' in s:
+    s = s.replace('∧', '*')
+if '∨' in s:
+    s = s.replace('∨', '+')
+print('x1 x2 x3 x4 x5 x6')
+ans = []
+for x1 in range(2):
+    for x2 in range(2):
+        for x3 in range(2):
+            for x4 in range(2):
+                for x5 in range(2):
+                    for x6 in range(2):
+                        if int(bool(eval(s)))==0:
+                            ans.append(''.join(list(map(str, [x1, x2, x3, x4, x5, x6, 0]))))
+if '1100000' in ans and '1010010' in ans and '1001000' in ans:
+    print('alright')
